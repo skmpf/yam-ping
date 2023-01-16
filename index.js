@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 const cron = require("node-cron");
 const realtokens = require("./realtokens.json");
 
@@ -19,7 +20,14 @@ client.once(Events.ClientReady, (c) => {
 client.login(token);
 
 async function scrapeWebsite() {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    // headless: false,
+    // defaultViewport: null,
+    // slowMo: 50,
+    executablePath: "/usr/bin/chromium-browser",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    userDataDir: "./myChromeSession",
+  });
   const page = await browser.newPage();
   await page.goto(url);
 
