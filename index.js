@@ -1,7 +1,10 @@
 // const puppeteer = require("puppeteer");
 const puppeteer = require("puppeteer-core");
+const sqlite3 = require("sqlite3").verbose();
 const cron = require("node-cron");
 const realtokens = require("./realtokens.json");
+
+let db = new sqlite3.Database("./yam.db");
 
 // Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits } = require("discord.js");
@@ -63,6 +66,8 @@ function sendNotification(match) {
     channel.send(`A match was found: ${match}`);
   });
 }
+
+// create a properties table if it doesn't exist with the following columns: offer, property,	realt_price, offer_price,	offer_amount, current_yield, rent_start_date
 
 cron.schedule("*/15 * * * *", () => {
   checkForMatches();
