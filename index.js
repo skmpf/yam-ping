@@ -66,7 +66,7 @@ async function checkForMatches() {
   }
 
   if (newOffers.length > 0) {
-    sendMail(offers);
+    sendMail(newOffers);
   }
 }
 
