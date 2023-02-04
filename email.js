@@ -12,6 +12,7 @@ const client = nodemailer.createTransport({
 const sendMail = async (offers) => {
   const emailBody = offers.map((offer) => {
     return `
+      Offer: ${offer.offer}
       Property: ${offer.property}
       Realt price: ${offer.realt_price}
       Offer price: ${offer.offer_price}
@@ -22,7 +23,6 @@ const sendMail = async (offers) => {
       Rent start date: ${offer.rent_start_date}
     `;
   });
-  console.log("🚀 ~ file: email.js:25 ~ emailBody ~ emailBody", emailBody);
 
   const mailOptions = {
     from: "realt@gmail.com",

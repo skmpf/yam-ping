@@ -1,15 +1,9 @@
 // const puppeteer = require("puppeteer");
 const puppeteer = require("puppeteer-core");
 const realtokens = require("./realtokens.json");
-const {
-  addNewProperty,
-  createPropertiesTable,
-  getProperty,
-} = require("./database");
+const { addProperty, getPropertyByOffer } = require("./model/Property");
 const { sendMail } = require("./email");
 const { url } = require("./config.json");
-
-createPropertiesTable();
 
 async function scrapeWebsite() {
   const browser = await puppeteer.launch({
@@ -59,19 +53,19 @@ async function scrapeWebsite() {
 
 async function checkForMatches() {
   const data = await scrapeWebsite();
-  const offers = [];
+  const newOffers = [];
 
-  for (let i = 0; i < data.length; i++) {
-    if (realtokens.includes(data[i].property)) {
-      const offer = getProperty(data[i].offer);
-      if (!offer) {
-        offers.push(data[i]);
-        addNewProperty(data[i]);
+  for (const element of data) {
+    if (realtokens.includes(element.property)) {
+      const existingOffer = await getPropertyByOffer(element.offer);
+      if (!existingOffer) {
+        newOffers.push(element);
+        addProperty(element);
       }
     }
   }
 
-  if (offers.length > 0) {
+  if (newOffers.length > 0) {
     sendMail(offers);
   }
 }
