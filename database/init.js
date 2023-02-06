@@ -13,7 +13,8 @@ const initDatabase = async () => {
       price_difference TEXT,
       current_yield TEXT,
       new_yield TEXT,
-      rent_start_date TEXT
+      rent_start_date TEXT,
+      creation_date TEXT DEFAULT CURRENT_TIMESTAMP
   )`);
 
   await db.close();
