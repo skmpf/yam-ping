@@ -33,9 +33,9 @@ const sendMail = async (offers) => {
 
   client.sendMail(mailOptions, (err) => {
     if (err) {
-      console.log("Error: ", err);
+      console.log(new Date().toLocaleString, "Error: ", err);
     } else {
-      console.log("Email sent!");
+      console.log(new Date().toLocaleString, "Email sent!");
     }
   });
 };

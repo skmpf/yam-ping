@@ -52,6 +52,7 @@ async function scrapeWebsite() {
 }
 
 async function checkForMatches() {
+  console.log(new Date().toLocaleString, "Checking for new offers...");
   const data = await scrapeWebsite();
   const newOffers = [];
 
